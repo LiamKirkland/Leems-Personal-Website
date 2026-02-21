@@ -1,14 +1,15 @@
 @font-face {
     font-family: MaraFont;
-    src: url(assets/Maratype.woff2);
+    src: url(assets/fonts/Maratype.woff2);
 }
 @font-face {
     font-family: MartonFont;
-    src: url(assets/Sequel100Black-75.ttf);
+    src: url(assets/fonts/Sequel100Black-75.ttf);
 }
 
 body {
     font-family: "MaraFont";
+    font-size: 1.5rem;
 }
 
 #bgVideo {
@@ -33,4 +34,22 @@ body {
     text-align: center;
     color: #C2FE0B;
     background-color: #000;
+}
+
+#contentBody {
+    display: grid;
+    grid-template-columns: 48% 48%;
+    padding: 0px 35px;
+    column-gap: 40px;
+    align-content: center;
+    font-family: MartonFont;
+}
+
+img {
+    width: 100%;
+}
+
+#contentBody figure {
+    text-align: center;
+    margin: 0;
 }
