@@ -29,6 +29,8 @@ body {
 }
 
 #header {
-    font-size: 50px;
+    font-size: 6rem;
     text-align: center;
+    color: #C2FE0B;
+    background-color: #000;
 }
