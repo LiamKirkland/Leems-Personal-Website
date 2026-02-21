@@ -25,7 +25,7 @@ body {
 #mainContentDiv {
     margin: auto;
     width: 75%;
-    height: 1300px;
+    padding-bottom: 35px;
     background-color: rgba(144, 141, 141, 0.883);
 }
 
@@ -45,6 +45,14 @@ body {
     font-family: MartonFont;
 }
 
+#contentBody > video {
+    width: 100%;
+}
+
+#pcaBedroom {
+    grid-column: span 2;
+}
+
 img {
     width: 100%;
 }
@@ -52,4 +60,37 @@ img {
 #contentBody figure {
     text-align: center;
     margin: 0;
+}
+
+#buttonBoom {
+    width: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    min-height: 440px;
+}
+
+#overlayAnim {
+    position: absolute;
+    pointer-events: none;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+#doNotPress {
+    font-family: MaraFont;
+    font-size: calc(1vw + 1vh);
+    background-color: red;
+    border: 5px solid black;
+    color: white;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+}
+
+#doNotPress:active {
+    background-color: rgb(204, 0, 0);
 }

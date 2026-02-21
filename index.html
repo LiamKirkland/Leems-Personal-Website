@@ -8,7 +8,7 @@
 
   <body>
     <video autoplay muted loop playsinline id="bgVideo">
-      <source src="./assets/backgroundVideo.mp4" type="video/mp4" />
+      <source src="./assets/videos/backgroundVideo.mp4" type="video/mp4" />
       Your browser does not support HTML5 video.
     </video>
     <div id="mainContentDiv">
@@ -24,9 +24,33 @@
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
         <figure>
-            <img src="assets/images/PCA2026.jpg" id="pcaSlider">
-            <figcaption>^ Click the image to see why you should accept me into PCA! ^</figcaption>
+          <img src="assets/images/PCA2026.jpg" id="pcaSlider" />
+          <figcaption>
+            ^ Click the image to see why you should accept me into PCA! ^
+          </figcaption>
         </figure>
+
+        <figure>
+          <video autoplay muted loop playsinline>
+            <source src="./assets/videos/planktonButton.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video.
+          </video>
+          <figcaption>Whatever you do, DO NOT PRESS THE RED BUTTON!</figcaption>
+        </figure>
+        <div id="buttonBoom">
+          <button id="doNotPress">Don't click me</button>
+          <video id="overlayAnim" muted playsinline preload="auto">
+            <source
+              src="./assets/videos/kaboom.webm"
+              type="video/webm"
+            />
+          </video>
+        </div>
+
+        <video autoplay muted loop playsinline id="pcaBedroom">
+          <source src="./assets/videos/zoomBackground.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
       </div>
     </div>
     <script src="script.js"></script>
