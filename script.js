@@ -54,7 +54,7 @@ function buttonAction() {
       buttonState++;
       break;
     case 3:
-      redButton.textContent = "I'm warming you Don't press me";
+      redButton.textContent = "I'm warning you Don't press me";
       buttonState++;
       break;
     case 4:
@@ -79,3 +79,37 @@ function buttonAction() {
 }
 
 redButton.addEventListener("click", buttonAction);
+
+const playerArea = document.getElementById("playerArea");
+const gameArea = document.getElementById("gameArea");
+
+for (i = 0; i < 9; i++) {
+  const button = document.createElement("button");
+
+  button.id = `playerButton${i}`;
+  button.className = "playerButtons";
+  button.addEventListener("click", playTTT);
+  button.textContent = "X";
+  playerArea.appendChild(button);
+}
+
+for (i = 0; i < 9; i++) {
+  const playSpace = document.createElement("div");
+
+  playSpace.id = `playSpace${i}`;
+  playSpace.className = "playSpaces";
+  playSpace.textContent = "-";
+
+  gameArea.appendChild(playSpace);
+}
+
+let gameStarted = 0;
+let playerButtons = document.getElementsByClassName("playerButton");
+let playSpaces = document.getElementsByClassName("playSpaces");
+
+function playTTT() {
+    if (gameStarted == 0){
+        document.querySelector("#gameArea > p").textContent = "- Tic-Tac-Toe -";
+        document.querySelector("#playerArea > p").textContent = "CPU Turn";
+    }
+}

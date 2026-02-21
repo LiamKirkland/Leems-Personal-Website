@@ -105,3 +105,68 @@ img {
 #doNotPress:active {
   background-color: rgb(204, 0, 0);
 }
+
+#playerArea {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  padding: 20px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+#playerArea > p {
+  grid-column: span 3;
+  text-align: center;
+  font-family: MaraFont;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.playerButtons {
+  width: 50%;
+  aspect-ratio: 1/1;
+  margin: auto;
+}
+
+.playerButtons:hover:not([disabled]) {
+}
+
+
+#gameArea {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  padding: 20px 0;
+}
+
+#gameArea > p {
+  color: #c2fe0b;
+  font-family: MaraFont;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+  grid-column: span 3;
+  padding-bottom: 30px;
+}
+
+.playSpaces {
+    font-family: MaraFont;
+    font-size: 5rem;
+    text-align: center;
+}
+
+#playSpace4 {
+    border: 5px solid #c2fe0b;
+}
+
+#playSpace1, #playSpace7 {
+    border-left: 5px solid #c2fe0b;
+    border-right: 5px solid #c2fe0b;
+}
+
+#playSpace3, #playSpace5 {
+    border-top: 5px solid #c2fe0b;
+    border-bottom: 5px solid #c2fe0b;
+}
