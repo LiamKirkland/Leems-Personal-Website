@@ -1,15 +1,15 @@
 @font-face {
-    font-family: MaraFont;
-    src: url(assets/fonts/Maratype.woff2);
+  font-family: MaraFont;
+  src: url(assets/fonts/Maratype.woff2);
 }
 @font-face {
-    font-family: MartonFont;
-    src: url(assets/fonts/Sequel100Black-75.ttf);
+  font-family: MartonFont;
+  src: url(assets/fonts/Sequel100Black-75.ttf);
 }
 
 body {
-    font-family: "MaraFont";
-    font-size: 1.5rem;
+  font-family: "MaraFont";
+  font-size: 1.5rem;
 }
 
 #bgVideo {
@@ -18,79 +18,89 @@ body {
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  z-index: -1; 
-  object-fit: cover;
+  z-index: -1;
+  object-fit: contain;
 }
 
 #mainContentDiv {
-    margin: auto;
-    width: 75%;
-    padding-bottom: 35px;
-    background-color: rgba(144, 141, 141, 0.883);
+  margin: auto;
+  width: 75%;
+  padding-bottom: 35px;
+  background-color: rgba(144, 141, 141, 0.883);
 }
 
 #header {
-    font-size: 6rem;
-    text-align: center;
-    color: #C2FE0B;
-    background-color: #000;
+  font-size: 6rem;
+  text-align: center;
+  color: #c2fe0b;
+  background-color: #000;
 }
 
 #contentBody {
-    display: grid;
-    grid-template-columns: 48% 48%;
-    padding: 0px 35px;
-    column-gap: 40px;
-    align-content: center;
-    font-family: MartonFont;
+  display: grid;
+  grid-template-columns: 48% 48%;
+  padding: 0px 35px;
+  column-gap: 40px;
+  align-content: center;
+  font-family: MartonFont;
 }
 
 #contentBody > video {
-    width: 100%;
+  width: 100%;
 }
 
 #pcaBedroom {
-    grid-column: span 2;
+  grid-column: span 2;
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }
 
 #contentBody figure {
-    text-align: center;
-    margin: 0;
+  text-align: center;
+  margin: 0;
 }
 
 #buttonBoom {
-    width: 100%;
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    min-height: 440px;
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  min-height: 440px;
+}
+
+#contentBody video {
+  width: 100%;
 }
 
 #overlayAnim {
-    position: absolute;
-    pointer-events: none;
-    inset: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+  inset: 0;
+  position: absolute;
+  pointer-events: none;
+  object-fit: cover;
+  height: 100%;
 }
 
 #doNotPress {
-    font-family: MaraFont;
-    font-size: calc(1vw + 1vh);
-    background-color: red;
-    border: 5px solid black;
-    color: white;
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
+  font-family: MaraFont;
+  font-size: calc(0.95vw + 0.95vw);
+  background-color: red;
+  border: 5px solid black;
+  color: white;
+  border-radius: 50%;
+  height: 60%;
+  aspect-ratio: 1/1;
+  text-align: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #doNotPress:active {
-    background-color: rgb(204, 0, 0);
+  background-color: rgb(204, 0, 0);
 }

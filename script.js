@@ -1,3 +1,8 @@
+/*
+    I'll admit, this is not really formatted or organized properly at all. 
+    I sorta just built out the random ideas I had as I thought of em.
+*/
+
 const pcaSlider = document.getElementById("pcaSlider");
 
 let imgIndex = 0;
@@ -33,28 +38,36 @@ let buttonState = 0;
 function buttonAction() {
   switch (buttonState) {
     case 0:
-      redButton.textContent = "Haha funny. But seriously don't click me";
+      redButton.textContent = "Haha very funny Now cut it out";
       buttonState++;
       break;
     case 1:
-      redButton.textContent = "Dude, stop";
+      redButton.textContent = "Seriously stop it";
       buttonState++;
       break;
     case 2:
-      redButton.textContent = "I'm warming you! Don't press me!";
+      redButton.textContent = "Dude stop";
       buttonState++;
       break;
     case 3:
-      redButton.textContent = "Last chance to look at me, Hector...";
+      redButton.textContent = "I'm warming you Don't press me";
       buttonState++;
       break;
     case 4:
+      redButton.textContent = "Last chance to look at me Hector...";
+      buttonState++;
+      break;
+    case 5:
       redButton.disabled = true;
+      redButton.style.backgroundColor = "rgb(204, 0, 0)";
       boomBox.currentTime = 0;
       boomBox.play();
+      setTimeout(() => {
+        redButton.textContent = "Don't click me";
+      }, 250);
       boomBox.addEventListener("ended", () => {
         redButton.disabled = false;
-        redButton.textContent = "Don't click me";
+        redButton.style.backgroundColor = "red";
       });
       buttonState = 0;
       break;
