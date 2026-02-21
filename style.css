@@ -1,4 +1,14 @@
+@font-face {
+    font-family: MaraFont;
+    src: url(assets/Maratype.woff2);
+}
+@font-face {
+    font-family: MartonFont;
+    src: url(assets/Sequel100Black-75.ttf);
+}
+
 body {
+    font-family: "MaraFont";
 }
 
 #bgVideo {
@@ -9,4 +19,16 @@ body {
   min-height: 100%;
   z-index: -1; 
   object-fit: cover;
+}
+
+#mainContentDiv {
+    margin: auto;
+    width: 75%;
+    height: 1300px;
+    background-color: rgba(144, 141, 141, 0.883);
+}
+
+#header {
+    font-size: 50px;
+    text-align: center;
 }
