@@ -96,10 +96,14 @@ for (i = 0; i < 9; i++) {
   button.className = "playerButtons";
   button.addEventListener("click", playTTT);
   button.addEventListener("mouseenter", function () {
-    playSpaces[playerButtons.indexOf(this)].style.color = "#99c80b92";
+    if (!this.disabled) {
+      playSpaces[playerButtons.indexOf(this)].style.color = "#99c80b92";
+    }
   });
   button.addEventListener("mouseleave", function () {
-    playSpaces[playerButtons.indexOf(this)].style.color = "#0000";
+    if (!this.disabled) {
+      playSpaces[playerButtons.indexOf(this)].style.color = "#0000";
+    }
   });
   button.textContent = "X";
   playerArea.appendChild(button);
@@ -295,10 +299,14 @@ function resetBoard() {
     button.className = "playerButtons";
     button.addEventListener("click", playTTT);
     button.addEventListener("mouseenter", function () {
-      playSpaces[playerButtons.indexOf(this)].style.color = "#99c80b92";
+      if (!this.disabled) {
+        playSpaces[playerButtons.indexOf(this)].style.color = "#99c80b92";
+      }
     });
     button.addEventListener("mouseleave", function () {
-      playSpaces[playerButtons.indexOf(this)].style.color = "#0000";
+      if (!this.disabled) {
+        playSpaces[playerButtons.indexOf(this)].style.color = "#0000";
+      }
     });
     button.textContent = "X";
     playerArea.appendChild(button);
