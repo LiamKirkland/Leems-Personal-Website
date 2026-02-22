@@ -135,8 +135,8 @@ img {
   color: #000;
 }
 
-.playerButtons:hover:not([disabled]) {
-    color: #c2fe0b;
+.playerButtons:hover:not([disabled]){
+    color: #99c80b92;
 }
 
 #gameArea {

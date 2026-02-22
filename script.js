@@ -95,6 +95,12 @@ for (i = 0; i < 9; i++) {
   button.id = `playerButton${i}`;
   button.className = "playerButtons";
   button.addEventListener("click", playTTT);
+  button.addEventListener("mouseenter", function () {
+    playSpaces[playerButtons.indexOf(this)].style.color = "#99c80b92";
+  });
+  button.addEventListener("mouseleave", function () {
+    playSpaces[playerButtons.indexOf(this)].style.color = "#0000";
+  });
   button.textContent = "X";
   playerArea.appendChild(button);
 }
@@ -104,7 +110,7 @@ for (i = 0; i < 9; i++) {
 
   playSpace.id = `playSpace${i}`;
   playSpace.className = "playSpaces";
-  playSpace.textContent = `${i}`;
+  playSpace.textContent = "X";
 
   gameArea.appendChild(playSpace);
 }
@@ -116,6 +122,7 @@ let playSpaces = [...document.getElementsByClassName("playSpaces")];
 
 let playersSpaces = [];
 let cpuSpaces = [];
+let firstTurnCPU = true;
 
 //got this from stackoverflow lol
 function containsAll(arr1, arr2) {
@@ -148,20 +155,11 @@ function getRandomInt(min, max) {
 }
 
 function cpuTurn() {
-  const rand = getRandomInt(0, playerButtons.length - 1);
+  // This is a LOT of nested 'if' statements which is probably very improper...
+  // but idk how else to do this without looking it up
 
-  playSpaces[rand].style.color = "#c2fe0b";
-  playSpaces[rand].textContent = "O";
-
-  cpuSpaces.push(staticPlayerButtons.indexOf(playerButtons[rand]));
-  playSpaces.splice(rand, 1);
-  playerButtons[rand].disabled = true;
-  playerButtons[rand].textContent = "O";
-  playerButtons[rand].style.color = "#c2fe0b";
-  playerButtons.splice(rand, 1);
-
-  if (checkWin(cpuSpaces)) {
-    document.querySelector("#gameArea > p").textContent = "You Lose :(";
+  if (playerButtons.length === 0) {
+    document.querySelector("#gameArea > p").textContent = "It's a draw";
     document.querySelector("#playerArea > p").textContent =
       "Click any button to restart the game";
     gameStarted = 2;
@@ -169,10 +167,113 @@ function cpuTurn() {
       i.disabled = false;
     });
   } else {
-    playerButtons.forEach((i) => {
-      i.disabled = false;
-    });
-    document.querySelector("#playerArea > p").textContent = "Your Turn";
+    if (firstTurnCPU) {
+      console.log("Took first turn");
+      if (playerButtons.includes(document.querySelector("#playerButton4"))) {
+        let buttonIndex = playerButtons.indexOf(
+          document.querySelector("#playerButton4"),
+        );
+        playSpaces[buttonIndex].style.color = "#c2fe0b";
+        playSpaces[buttonIndex].textContent = "O";
+
+        cpuSpaces.push(staticPlayerButtons.indexOf(playerButtons[buttonIndex]));
+        playSpaces.splice(buttonIndex, 1);
+        playerButtons[buttonIndex].disabled = true;
+        playerButtons[buttonIndex].textContent = "O";
+        playerButtons[buttonIndex].style.color = "#c2fe0b";
+        playerButtons.splice(buttonIndex, 1);
+
+        firstTurnCPU = false;
+      } else {
+        let buttonIndex = playerButtons.indexOf(
+          document.querySelector("#playerButton2"),
+        );
+        playSpaces[buttonIndex].style.color = "#c2fe0b";
+        playSpaces[buttonIndex].textContent = "O";
+
+        cpuSpaces.push(staticPlayerButtons.indexOf(playerButtons[buttonIndex]));
+        playSpaces.splice(buttonIndex, 1);
+        playerButtons[buttonIndex].disabled = true;
+        playerButtons[buttonIndex].textContent = "O";
+        playerButtons[buttonIndex].style.color = "#c2fe0b";
+        playerButtons.splice(buttonIndex, 1);
+
+        firstTurnCPU = false;
+      }
+    } else {
+      console.log("Took follow up turn");
+      let moveTaken = false;
+      for (const space of playerButtons) {
+        let nextMoveCPU = [...cpuSpaces];
+        let nextMovePlayer = [...playersSpaces];
+        nextMoveCPU.push(staticPlayerButtons.indexOf(space));
+        nextMovePlayer.push(staticPlayerButtons.indexOf(space));
+
+        if (checkWin(nextMoveCPU)) {
+          console.log("Winning Move Taken");
+          let buttonIndex = playerButtons.indexOf(space);
+          playSpaces[buttonIndex].style.color = "#c2fe0b";
+          playSpaces[buttonIndex].textContent = "O";
+
+          cpuSpaces.push(
+            staticPlayerButtons.indexOf(playerButtons[buttonIndex]),
+          );
+          playSpaces.splice(buttonIndex, 1);
+          playerButtons[buttonIndex].disabled = true;
+          playerButtons[buttonIndex].textContent = "O";
+          playerButtons[buttonIndex].style.color = "#c2fe0b";
+          playerButtons.splice(buttonIndex, 1);
+          moveTaken = true;
+          break;
+        }
+        if (checkWin(nextMovePlayer)) {
+          console.log("Block Move Taken");
+          let buttonIndex = playerButtons.indexOf(space);
+          playSpaces[buttonIndex].style.color = "#c2fe0b";
+          playSpaces[buttonIndex].textContent = "O";
+
+          cpuSpaces.push(
+            staticPlayerButtons.indexOf(playerButtons[buttonIndex]),
+          );
+          playSpaces.splice(buttonIndex, 1);
+          playerButtons[buttonIndex].disabled = true;
+          playerButtons[buttonIndex].textContent = "O";
+          playerButtons[buttonIndex].style.color = "#c2fe0b";
+          playerButtons.splice(buttonIndex, 1);
+          moveTaken = true;
+          break;
+        }
+      }
+      if (!moveTaken) {
+        console.log("Random Move Taken");
+        const rand = getRandomInt(0, playerButtons.length - 1);
+
+        playSpaces[rand].style.color = "#c2fe0b";
+        playSpaces[rand].textContent = "O";
+
+        cpuSpaces.push(staticPlayerButtons.indexOf(playerButtons[rand]));
+        playSpaces.splice(rand, 1);
+        playerButtons[rand].disabled = true;
+        playerButtons[rand].textContent = "O";
+        playerButtons[rand].style.color = "#c2fe0b";
+        playerButtons.splice(rand, 1);
+      }
+    }
+
+    if (checkWin(cpuSpaces)) {
+      document.querySelector("#gameArea > p").textContent = "You Lose :(";
+      document.querySelector("#playerArea > p").textContent =
+        "Click any button to restart the game";
+      gameStarted = 2;
+      staticPlayerButtons.forEach((i) => {
+        i.disabled = false;
+      });
+    } else {
+      playerButtons.forEach((i) => {
+        i.disabled = false;
+      });
+      document.querySelector("#playerArea > p").textContent = "Your Turn";
+    }
   }
 }
 /*
@@ -193,6 +294,12 @@ function resetBoard() {
     button.id = `playerButton${i}`;
     button.className = "playerButtons";
     button.addEventListener("click", playTTT);
+    button.addEventListener("mouseenter", function () {
+      playSpaces[playerButtons.indexOf(this)].style.color = "#99c80b92";
+    });
+    button.addEventListener("mouseleave", function () {
+      playSpaces[playerButtons.indexOf(this)].style.color = "#0000";
+    });
     button.textContent = "X";
     playerArea.appendChild(button);
   }
@@ -202,7 +309,7 @@ function resetBoard() {
 
     playSpace.id = `playSpace${i}`;
     playSpace.className = "playSpaces";
-    playSpace.textContent = `${i}`;
+    playSpace.textContent = "X";
 
     gameArea.appendChild(playSpace);
   }
@@ -211,6 +318,7 @@ function resetBoard() {
   staticPlaySpaces = [...document.getElementsByClassName("playSpaces")];
   playerButtons = [...document.getElementsByClassName("playerButtons")];
   playSpaces = [...document.getElementsByClassName("playSpaces")];
+  firstTurnCPU = true;
 
   document.querySelector("#gameArea > p").textContent = "- Tic-Tac-Toe -";
   document.querySelector("#playerArea > p").textContent = "Your Turn";
