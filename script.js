@@ -80,8 +80,14 @@ function buttonAction() {
 
 redButton.addEventListener("click", buttonAction);
 
+/*
+    There is DEFINITELY an easier way to build this out. I tried as best as I could to work out all of the logic by myself.
+    This was honetsly a lot harder than I thought it would be going into it, 
+    but I'm quite pleased with myself for figuring SOMETHING out... even if it's likely that it's horrifically inefficient
+*/
 const playerArea = document.getElementById("playerArea");
 const gameArea = document.getElementById("gameArea");
+let gameStarted = 0;
 
 for (i = 0; i < 9; i++) {
   const button = document.createElement("button");
@@ -98,18 +104,73 @@ for (i = 0; i < 9; i++) {
 
   playSpace.id = `playSpace${i}`;
   playSpace.className = "playSpaces";
-  playSpace.textContent = "-";
-
+  playSpace.textContent = `${i}`;
+    
   gameArea.appendChild(playSpace);
 }
 
-let gameStarted = 0;
-let playerButtons = document.getElementsByClassName("playerButton");
-let playSpaces = document.getElementsByClassName("playSpaces");
+const staticPlayerButtons = [...document.getElementsByClassName("playerButtons")]
+let playerButtons = [...document.getElementsByClassName("playerButtons")];
+let playSpaces = [...document.getElementsByClassName("playSpaces")];
+
+let playersSpaces = []
+let cpuSpaces = []
+
+//got this from stackoverflow lol
+function containsAll(arr1, arr2) {
+  return arr1.every(i => arr2.includes(i));
+}
+
+function checkWin(spaces) {
+    //this is ugly but I couldn't figure out how to use a switch statement here
+    if (
+        containsAll([0,1,2], spaces) || 
+        containsAll([0,3,6], spaces) ||
+        containsAll([0,4,8], spaces) ||
+        containsAll([1,4,7], spaces) ||
+        containsAll([2,5,8], spaces) || 
+        containsAll([3,4,5], spaces) ||
+        containsAll([6,7,8], spaces) ||
+        containsAll([2,4,6], spaces)
+    ){
+        return true
+    } else {
+        return false
+    }
+}
+
+function cpuTurn() {
+    
+}
 
 function playTTT() {
     if (gameStarted == 0){
         document.querySelector("#gameArea > p").textContent = "- Tic-Tac-Toe -";
-        document.querySelector("#playerArea > p").textContent = "CPU Turn";
+        gameStarted = 1;
+    }
+
+    let clickedButton = document.getElementById(this.id)
+    console.log(playSpaces[playerButtons.indexOf(clickedButton)])
+
+    playSpaces[playerButtons.indexOf(clickedButton)].style.color = "#c2fe0b"
+    playSpaces[playerButtons.indexOf(clickedButton)].textContent = "X"
+
+    playSpaces.splice(playerButtons.indexOf(clickedButton),1);
+    playerButtons.splice(playerButtons.indexOf(clickedButton),1);
+    playersSpaces.push(staticPlayerButtons.indexOf(clickedButton));
+    this.disabled = true;
+
+    if(checkWin(playersSpaces)) {
+        document.querySelector("#gameArea > p").textContent = "You Win!"
+        gameStarted = 2;
+        staticPlayerButtons.forEach(i => {
+            i.textContent = "New Game"
+            i.disabled = false;
+        })
+    } else {
+        document.querySelector("#playerArea > p").textContent = "CPU's Turn";
+        setTimeout(() => {
+
+        }, 1000)
     }
 }
