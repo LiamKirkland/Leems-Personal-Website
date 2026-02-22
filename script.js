@@ -105,72 +105,159 @@ for (i = 0; i < 9; i++) {
   playSpace.id = `playSpace${i}`;
   playSpace.className = "playSpaces";
   playSpace.textContent = `${i}`;
-    
+
   gameArea.appendChild(playSpace);
 }
 
-const staticPlayerButtons = [...document.getElementsByClassName("playerButtons")]
+let staticPlayerButtons = [...document.getElementsByClassName("playerButtons")];
+let staticPlaySpaces = [...document.getElementsByClassName("playSpaces")];
 let playerButtons = [...document.getElementsByClassName("playerButtons")];
 let playSpaces = [...document.getElementsByClassName("playSpaces")];
 
-let playersSpaces = []
-let cpuSpaces = []
+let playersSpaces = [];
+let cpuSpaces = [];
 
 //got this from stackoverflow lol
 function containsAll(arr1, arr2) {
-  return arr1.every(i => arr2.includes(i));
+  return arr1.every((i) => arr2.includes(i));
 }
 
 function checkWin(spaces) {
-    //this is ugly but I couldn't figure out how to use a switch statement here
-    if (
-        containsAll([0,1,2], spaces) || 
-        containsAll([0,3,6], spaces) ||
-        containsAll([0,4,8], spaces) ||
-        containsAll([1,4,7], spaces) ||
-        containsAll([2,5,8], spaces) || 
-        containsAll([3,4,5], spaces) ||
-        containsAll([6,7,8], spaces) ||
-        containsAll([2,4,6], spaces)
-    ){
-        return true
-    } else {
-        return false
-    }
+  //this is ugly but I couldn't figure out how to use a switch statement here
+  console.log(spaces);
+  if (
+    containsAll([0, 1, 2], spaces) ||
+    containsAll([0, 3, 6], spaces) ||
+    containsAll([0, 4, 8], spaces) ||
+    containsAll([1, 4, 7], spaces) ||
+    containsAll([2, 5, 8], spaces) ||
+    containsAll([3, 4, 5], spaces) ||
+    containsAll([6, 7, 8], spaces) ||
+    containsAll([2, 4, 6], spaces)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+//another stackoverflow grab
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function cpuTurn() {
-    
+  const rand = getRandomInt(0, playerButtons.length - 1);
+
+  playSpaces[rand].style.color = "#c2fe0b";
+  playSpaces[rand].textContent = "O";
+
+  cpuSpaces.push(staticPlayerButtons.indexOf(playerButtons[rand]));
+  playSpaces.splice(rand, 1);
+  playerButtons[rand].disabled = true;
+  playerButtons[rand].textContent = "O";
+  playerButtons[rand].style.color = "#c2fe0b";
+  playerButtons.splice(rand, 1);
+
+  if (checkWin(cpuSpaces)) {
+    document.querySelector("#gameArea > p").textContent = "You Lose :(";
+    document.querySelector("#playerArea > p").textContent =
+      "Click any button to restart the game";
+    gameStarted = 2;
+    staticPlayerButtons.forEach((i) => {
+      i.disabled = false;
+    });
+  } else {
+    playerButtons.forEach((i) => {
+      i.disabled = false;
+    });
+    document.querySelector("#playerArea > p").textContent = "Your Turn";
+  }
+}
+/*
+    This may look weird, but I couldn't figure out a way to reset the board without using inline styling, 
+    which overwrote the hover styling. Probably a skill issue
+*/
+function resetBoard() {
+  staticPlayerButtons.forEach((i) => {
+    i.remove();
+  });
+  staticPlaySpaces.forEach((i) => {
+    i.remove();
+  });
+
+  for (i = 0; i < 9; i++) {
+    const button = document.createElement("button");
+
+    button.id = `playerButton${i}`;
+    button.className = "playerButtons";
+    button.addEventListener("click", playTTT);
+    button.textContent = "X";
+    playerArea.appendChild(button);
+  }
+
+  for (i = 0; i < 9; i++) {
+    const playSpace = document.createElement("div");
+
+    playSpace.id = `playSpace${i}`;
+    playSpace.className = "playSpaces";
+    playSpace.textContent = `${i}`;
+
+    gameArea.appendChild(playSpace);
+  }
+
+  staticPlayerButtons = [...document.getElementsByClassName("playerButtons")];
+  staticPlaySpaces = [...document.getElementsByClassName("playSpaces")];
+  playerButtons = [...document.getElementsByClassName("playerButtons")];
+  playSpaces = [...document.getElementsByClassName("playSpaces")];
+
+  document.querySelector("#gameArea > p").textContent = "- Tic-Tac-Toe -";
+  document.querySelector("#playerArea > p").textContent = "Your Turn";
 }
 
 function playTTT() {
-    if (gameStarted == 0){
-        document.querySelector("#gameArea > p").textContent = "- Tic-Tac-Toe -";
-        gameStarted = 1;
-    }
+  if (gameStarted == 0) {
+    document.querySelector("#gameArea > p").textContent = "- Tic-Tac-Toe -";
+    gameStarted = 1;
+  }
+  if (gameStarted == 2) {
+    resetBoard();
+    playerButtons = [...document.getElementsByClassName("playerButtons")];
+    playSpaces = [...document.getElementsByClassName("playSpaces")];
+    playersSpaces = [];
+    cpuSpaces = [];
+    gameStarted = 0;
+  } else {
+    let clickedButton = document.getElementById(this.id);
+    console.log(playSpaces[playerButtons.indexOf(clickedButton)]);
 
-    let clickedButton = document.getElementById(this.id)
-    console.log(playSpaces[playerButtons.indexOf(clickedButton)])
+    playSpaces[playerButtons.indexOf(clickedButton)].style.color = "#c2fe0b";
+    playSpaces[playerButtons.indexOf(clickedButton)].textContent = "X";
 
-    playSpaces[playerButtons.indexOf(clickedButton)].style.color = "#c2fe0b"
-    playSpaces[playerButtons.indexOf(clickedButton)].textContent = "X"
-
-    playSpaces.splice(playerButtons.indexOf(clickedButton),1);
-    playerButtons.splice(playerButtons.indexOf(clickedButton),1);
+    playSpaces.splice(playerButtons.indexOf(clickedButton), 1);
+    playerButtons.splice(playerButtons.indexOf(clickedButton), 1);
     playersSpaces.push(staticPlayerButtons.indexOf(clickedButton));
     this.disabled = true;
+    this.textContent = "X";
+    this.style.color = "#c2fe0b";
 
-    if(checkWin(playersSpaces)) {
-        document.querySelector("#gameArea > p").textContent = "You Win!"
-        gameStarted = 2;
-        staticPlayerButtons.forEach(i => {
-            i.textContent = "New Game"
-            i.disabled = false;
-        })
+    if (checkWin(playersSpaces)) {
+      document.querySelector("#gameArea > p").textContent = "You Win!";
+      document.querySelector("#playerArea > p").textContent =
+        "Click any button to restart the game";
+      gameStarted = 2;
+      staticPlayerButtons.forEach((i) => {
+        i.disabled = false;
+      });
     } else {
-        document.querySelector("#playerArea > p").textContent = "CPU's Turn";
-        setTimeout(() => {
-
-        }, 1000)
+      document.querySelector("#playerArea > p").textContent = "CPU's Turn";
+      staticPlayerButtons.forEach((i) => {
+        i.disabled = true;
+      });
+      setTimeout(() => {
+        cpuTurn();
+      }, 1650);
     }
+  }
 }
